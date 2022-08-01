@@ -771,7 +771,7 @@ impl std::fmt::Debug for FDInfo {
 ///
 #[derive(Debug)]
 pub struct Process {
-    fd: OwnedFd,
+    pub fd: OwnedFd,
     pub pid: i32,
     pub(crate) root: PathBuf,
 }

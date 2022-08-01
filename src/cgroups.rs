@@ -1,4 +1,4 @@
-use crate::ProcResult;
+use crate::{FileWrapper, ProcResult};
 
 use super::process::Process;
 
@@ -88,10 +88,9 @@ impl Process {
     ///
     /// The displayed information differs for cgroupsversion 1 and version 2 hierarchies.
     pub fn cgroups(&self) -> ProcResult<Vec<ProcessCgroup>> {
-        use std::fs::File;
         use std::io::{BufRead, BufReader};
 
-        let file = File::open(self.root.join("cgroup"))?;
+        let file = FileWrapper::open_at(&self.root, &self.fd, "cgroup")?;
         let reader = BufReader::new(file);
 
         let mut vec = Vec::new();
